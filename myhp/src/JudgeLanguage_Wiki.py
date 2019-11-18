@@ -5,7 +5,6 @@ inputPath="..\data\WikiName\*.csv"
 import glob
 import csv
 import pandas as pd
-from . import GetFeature as gf
 import os
 from statistics import mean
 
@@ -30,6 +29,10 @@ import math
 #記号区切り、リストに単語を格納して返す
 def getWordListBySymbol (text):
 	return list(filter(lambda str:str != '', re.split(r'[･,-\.\'\s0-9#$%&!?*+/;:()<=>@^\[\]\\_{|}~"]', text)))
+### リストデータtext1と入力データtext2のレーベンシュタイン距離（編集距離）
+import Levenshtein
+def getLevenshteinDistance (text1, text2):
+	return Levenshtein.distance(text1, text2)
 
 
 def predictEditDistance(text):
@@ -41,7 +44,7 @@ def predictEditDistance(text):
 		nameScoreList = {}
 		initial = name[:1]
 		for wikiName, language in zip(wikiNames, Languages):
-			resultSeries = wikiName[initial].dropna().str.upper().apply(gf.getLevenshteinDistance, text2=name)
+			resultSeries = wikiName[initial].dropna().str.upper().apply(getLevenshteinDistance, text2=name)
 			#print(resultSeries)
 			if not resultSeries.empty:
 				nameScoreList[language]=resultSeries.min() * math.sqrt(length)
