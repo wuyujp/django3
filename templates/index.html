@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block main_containts %}
+{% load static %}
+
+  <form action="" method="get">
+    <label>名前:<input type="text" size="20" name="your_name"></label>
+    <input type="submit" value="送信">
+  </form>
+  {% if Language %}
+    {{ Language }}
+    <br>
+    {{ Score }}
+  {% endif %}
+
+{% endblock %}
