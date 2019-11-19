@@ -13,15 +13,17 @@ pd.set_option('display.max_columns', None)  # or 1000
 pd.set_option('display.max_rows', None)  # or 1000
 pd.set_option('display.max_colwidth', -1)  # or 199
 wikiNames = []
-Languages = ['Arabic', 'Chinese', 'English', 'Korean', 'Russian']
+Languages = []
 def getNames ():
 	header = ['Name', 'Language']
 	df =pd.DataFrame(columns=header)
 	# NameとLanguageのみを抽出
 	for file in glob.glob(inputPath):
 		print(file)
+		language = re.findall('Name(.)(.*)Name.csv', file)[0][1]
 		df = pd.read_csv(file, header = 0, dtype=str, encoding="utf-8",sep='\t', error_bad_lines=False)
 		wikiNames.append(df)
+		Languages.append(language)
 
 import re
 import math
@@ -55,9 +57,9 @@ def predictEditDistance(text):
 	return resultList
 
 
-def predictLanguage(text):	
+def predictLanguage(text):
 
-	getNames()	
+	getNames()
 	text = text.upper()
 	resultList = predictEditDistance(text)
 	finalresult = dict(zip(Languages, [0] * 5))
@@ -68,3 +70,5 @@ def predictLanguage(text):
 		return min(finalresult.items(), key=lambda x:x[1])[0], '{:.2%}'.format(1-min(finalresult.values())/mean(finalresult.values()))
 	else :
 		return "分からない～", "50%"
+
+print(predictLanguage("WUYU"))
