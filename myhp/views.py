@@ -19,7 +19,7 @@ class SampleTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        your_name = self.request.GET.get('your_name').upper()
+        your_name = self.request.GET.get('your_name')
         if your_name :
         	your_name = your_name.upper()
         dt1 = datetime.date(2019,8,12)
