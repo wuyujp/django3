@@ -57,11 +57,17 @@ def predictEditDistance(text):
 
 
 def predictLanguage(text):	
-	getNames()	
-	text = text.upper()
+	getNames()
+	if text :
+		text = text.upper()
 	resultList = predictEditDistance(text)
 	finalresult = dict(zip(Languages, [0] * 5))
 	for result in resultList:
 		for language in Languages:
 			finalresult[language] = finalresult[language] + result[language]
-	return min(finalresult.items(), key=lambda x:x[1])[0], 1-min(finalresult.values())/mean(finalresult.values())
+	if mean(finalresult.values()) != 0:
+		return min(finalresult.items(), key=lambda x:x[1])[0], 1-min(finalresult.values())/mean(finalresult.values())
+	else :
+		return "分からない～", "50%"
+
+print(predictLanguage("a"))
