@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-
-inputPath="..\data\WikiName\*.csv"
-
+from mysite.settings import BASE_DIR
+inputPath= BASE_DIR + "\myhp\data\WikiName\*.csv"
 import glob
 import csv
 import pandas as pd
@@ -20,7 +19,7 @@ def getNames ():
 	df =pd.DataFrame(columns=header)
 	# NameとLanguageのみを抽出
 	for file in glob.glob(inputPath):
-		#print(file)
+		print(file)
 		df = pd.read_csv(file, header = 0, dtype=str, encoding="utf-8",sep='\t', error_bad_lines=False)
 		wikiNames.append(df)
 
@@ -57,17 +56,15 @@ def predictEditDistance(text):
 
 
 def predictLanguage(text):	
-	getNames()
-	if text :
-		text = text.upper()
+
+	getNames()	
+	text = text.upper()
 	resultList = predictEditDistance(text)
 	finalresult = dict(zip(Languages, [0] * 5))
 	for result in resultList:
 		for language in Languages:
 			finalresult[language] = finalresult[language] + result[language]
 	if mean(finalresult.values()) != 0:
-		return min(finalresult.items(), key=lambda x:x[1])[0], 1-min(finalresult.values())/mean(finalresult.values())
+		return min(finalresult.items(), key=lambda x:x[1])[0], '{:.2%}'.format(1-min(finalresult.values())/mean(finalresult.values()))
 	else :
 		return "分からない～", "50%"
-
-print(predictLanguage("a"))
