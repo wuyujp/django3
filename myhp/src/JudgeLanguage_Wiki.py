@@ -6,7 +6,7 @@ import csv
 import pandas as pd
 import os
 from statistics import mean
-inputPath=os.path.join(BASE_DIR, "myhp\data\WikiName\*.csv")
+inputPath=os.path.join(BASE_DIR, "myhp/data/WikiName/*.csv")
 # xlsxからLiseNameを重複しないように抽出、csvに保存する
 # 常に省略しないprint
 pd.set_option('display.max_columns', None)  # or 1000
