@@ -30,13 +30,11 @@ class SampleTemplateView(TemplateView):
         days = dt.days
         context["version"] = "Version: " + ".".join([str(year), str(month), str(days)])
 
-
-
         if your_name in ["WUYU", "WU YU", "YU WU"] : 
         	context["Language"] = "老婆我爱你！"
         	return context
         if your_name in ["ZHOUWENJI", "ZHOU WEN JI", "ZHOU WENJI", "WENJI ZHOU", "WEN JI ZHOU"] : 
-        	context["Language"] = "99天纪念日快乐！"
+        	context["Language"] = str(days) + "天纪念日快乐！"
         	return context
         if your_name :
             context["Language"], context["Score"] = JudgeLanguage_Wiki.predictLanguage(your_name)

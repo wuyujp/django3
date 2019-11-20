@@ -6,10 +6,12 @@
     <label>名前:<input type="text" size="20" name="your_name"></label>
     <input type="submit" value="送信">
   </form>
+  <div>
   {% if Language %}
     {{ Language }}
     <br>
     {{ Score }}
   {% endif %}
+  </div>
 
 {% endblock %}
